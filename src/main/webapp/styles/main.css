@@ -57,7 +57,6 @@ h4, h5, h6 {
 }
 
 Header {
-  height: 75px;
 }
 
 
@@ -368,10 +367,8 @@ img.testmode {
 
 #zone-content {
   background-color: #fff;
-  margin-top: 32px;
 }
 #section-content {
-  padding-top: 20px;
   padding-bottom: 80px;
   font-size: 1.2em;
   height: 100%;

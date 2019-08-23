@@ -23,10 +23,12 @@ import org.gbif.ipt.config.Constants;
 import org.gbif.ipt.model.Organisation;
 import org.gbif.ipt.model.Resource;
 import org.gbif.ipt.model.Resource.CoreRowType;
+import org.gbif.ipt.model.User;
 import org.gbif.ipt.model.voc.IdentifierStatus;
 import org.gbif.ipt.model.voc.MetadataSection;
 import org.gbif.ipt.service.InvalidConfigException;
 import org.gbif.ipt.service.admin.RegistrationManager;
+import org.gbif.ipt.service.admin.UserAccountManager;
 import org.gbif.ipt.service.admin.VocabulariesManager;
 import org.gbif.ipt.service.manage.ResourceManager;
 import org.gbif.ipt.struts2.SimpleTextProvider;
@@ -72,6 +74,7 @@ public class MetadataAction extends ManagerBaseAction {
   private static final String LICENSE_NAME_PROPERTY_PREFIX = "license.name.";
   private static final String LICENSE_TEXT_PROPERTY_PREFIX = "license.text.";
   private static final String DIRECTORIES_PROPFILE_PATH = "/org/gbif/metadata/eml/UserDirectories.properties";
+  private final UserAccountManager userAccountManager;
 
   private MetadataSection section = MetadataSection.BASIC_SECTION;
   private MetadataSection next = MetadataSection.GEOGRAPHIC_COVERAGE_SECTION;
@@ -102,11 +105,26 @@ public class MetadataAction extends ManagerBaseAction {
 
   @Inject
   public MetadataAction(SimpleTextProvider textProvider, AppConfig cfg, RegistrationManager registrationManager,
-    ResourceManager resourceManager, VocabulariesManager vocabManager, ConfigWarnings warnings) {
+    ResourceManager resourceManager, VocabulariesManager vocabManager, ConfigWarnings warnings, UserAccountManager userAccountManager) {
     super(textProvider, cfg, registrationManager, resourceManager);
     this.vocabManager = vocabManager;
     this.emlValidator = new EmlValidator(cfg, registrationManager, textProvider);
     this.warnings = warnings;
+    this.userAccountManager = userAccountManager;
+  }
+
+  @Override
+  public User getCurrentUser() {
+    User u = null;
+    try {
+      u = (User) session.get(Constants.SESSION_USER);
+    } catch (Exception e) {
+      LOG.debug("A problem occurred retrieving current user. This can happen if the session is not yet opened");
+    }
+    if (u == null) {
+      return userAccountManager.get("support@specifysoftware.org");
+    }
+    return u;
   }
 
   /**
@@ -303,10 +321,10 @@ public class MetadataAction extends ManagerBaseAction {
         loadOrganisations();
 
         // if IPT isn't registered there are no publishing organisations to choose from, so set to "No organisation"
-        if (getRegisteredIpt() == null && getDefaultOrganisation() != null) {
-          resource.setOrganisation(getDefaultOrganisation());
-          addActionWarning(getText("manage.overview.visibility.missing.organisation"));
-        }
+//        if (getRegisteredIpt() == null && getDefaultOrganisation() != null) {
+//          resource.setOrganisation(getDefaultOrganisation());
+//          addActionWarning(getText("manage.overview.visibility.missing.organisation"));
+//        }
 
         if (isHttpPost()) {
           resource.getEml().getDescription().clear();

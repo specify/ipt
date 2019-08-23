@@ -71,9 +71,6 @@
 <#include "/WEB-INF/pages/inc/menu.ftl">
 <#include "/WEB-INF/pages/macros/forms.ftl"/>
 
-<h1><span class="superscript"><@s.text name='manage.overview.title.label'/></span>
-    <a href="resource.do?r=${resource.shortname}" title="${resource.title!resource.shortname}">${resource.title!resource.shortname}</a>
-</h1>
 <div class="grid_17 suffix_1">
 <form class="topForm" action="metadata-${section}.do" method="post">
 <h2 class="subTitle"><@s.text name='manage.metadata.additional.title'/></h2>
@@ -136,7 +133,6 @@
 
       	<div class="buttons">
      		<@s.submit cssClass="button" name="save" key="button.save" cssClass="confirm" />
-     		<@s.submit cssClass="button" name="cancel" key="button.cancel"/>
       	</div>
       	<div class="clearfix"></div>
   	</div>

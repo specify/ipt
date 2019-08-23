@@ -15,32 +15,8 @@
                 <hgroup class="site-name-slogan">
                   <h1 class="site-name"><a href="${baseURL}" rel="home" title="Home" class="active">Integrated Publishing Toolkit</a><span class="logoSuperscript">(IPT)</span></h1>
                   <h6 class="site-slogan">free and open access to biodiversity data</h6>
-                  [#if !cfg.devMode() && cfg.getRegistryType()?has_content && cfg.getRegistryType()=='PRODUCTION']
-                  [#else]
-                    <img class="testmode" src="${baseURL}/styles/testmode.png" />
-                  [/#if]
                 </hgroup>
-                <div id="region-user-second" class="region-inner region-user-second-inner">
-                  <ul id="language-menu">
-                    [#if (Session.curr_user)??]
-                      <li>[@s.text name="menu.loggedin"][@s.param]${Session.curr_user.email}[/@s.param][/@s.text]</li>
-                      <li[#if currentMenu=="account"] class="current"[/#if] ><a href="${baseURL}/account.do">[@s.text name="menu.account"/]</a></li>
-                      <li[#if currentMenu=="logout"] class="current"[/#if]><a href="${baseURL}/logout.do">[@s.text name="menu.logout"/]</a></li>
-                    [#else]
-                      <li>
-                        <form id="login-form" action="${baseURL}/login.do" method="post">
-                          <input type="text" size="25" name="email" class="form-reset" placeholder="email" />
-                          <input type="password" size="20" name="password" class="form-reset" placeholder="password" />
-                          <input name="csrfToken" type="hidden" value="${newCsrfToken!}">
-                          [@s.submit key="portal.login" name="login-submit"/]
-                        </form>
-                      </li>
-                    [/#if]
-                    <li>
-                        [#include "/WEB-INF/pages/inc/languages.ftl"/]
-                    </li>
-                  </ul>
-                </div>
+
               </div>
             </div>
           </div>
@@ -48,20 +24,7 @@
         <!-- show production logo only if ipt 1) .war was not built in test mode and 2) run in production mode -->
         <div id="zone-branding-wrapper" class="zone-wrapper zone-branding-wrapper clearfix">
           <div id="zone-branding" class="zone zone-branding clearfix container_24">
-      		  <div class="grid_13 region region-menu" id="region-menu">
-              <nav>
-      	        <ul>
-      		    	  <li[#if currentMenu=='home'] class="current"[/#if]><a href="${baseURL}/">[@s.text name="menu.home"/]</a></li>
-      		    	  [#if managerRights]
-      		    	    <li[#if currentMenu=='manage'] class="current"[/#if]><a href="${baseURL}/manage/">[@s.text name="menu.manage"/]</a></li>
-      		    	  [/#if]
-      		    	  [#if adminRights]
-      		    	    <li[#if currentMenu=='admin'] class="current"[/#if]><a href="${baseURL}/admin/">[@s.text name="menu.admin"/]</a></li>
-      		    	  [/#if]
-      		    	  <li[#if currentMenu=='about'] class="current"[/#if]><a href="${baseURL}/about.do">[@s.text name="menu.about"/]</a></li>
-      	        </ul>
-      	      </nav>
-      	    </div>
+
       	  </div>
       		<div id="search"></div>
         </div>

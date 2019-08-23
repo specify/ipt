@@ -106,17 +106,19 @@ public class ResourceFileAction extends PortalBaseAction {
       return NOT_FOUND;
     }
 
-    // if no specific version is requested, use the latest published version
-    if (version == null) {
-      BigDecimal latestVersion = resource.getLastPublishedVersionsVersion();
-      if (latestVersion == null) {
-        return NOT_FOUND;
-      } else {
-        version = latestVersion;
-      }
-    }
+//    // if no specific version is requested, use the latest published version
+//    if (version == null) {
+//      BigDecimal latestVersion = resource.getLastPublishedVersionsVersion();
+//      if (latestVersion == null) {
+//        return NOT_FOUND;
+//      } else {
+//        version = latestVersion;
+//      }
+//    }
 
-    data = dataDir.resourceEmlFile(resource.getShortname(), version);
+    data = version == null ?
+            dataDir.resourceEmlFile(resource.getShortname()) :
+            dataDir.resourceEmlFile(resource.getShortname(), version);
     mimeType = "text/xml";
 
     // construct download filename

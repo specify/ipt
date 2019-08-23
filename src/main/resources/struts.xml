@@ -72,7 +72,7 @@
       <interceptor-stack name="portalStack">
         <interceptor-ref name="resourceSession"/>
         <interceptor-ref name="setupAndCancel"/>
-        <interceptor-ref name="protectPrivateResource"/>
+        <!-- <interceptor-ref name="protectPrivateResource"/> -->
         <interceptor-ref name="iptStackWithoutSetup"/>
       </interceptor-stack>
 
@@ -87,7 +87,7 @@
       <interceptor-stack name="managerStack">
         <interceptor-ref name="resourceSession"/>
         <interceptor-ref name="setupAndCancel"/>
-        <interceptor-ref name="requireManager"/>
+        <!-- <interceptor-ref name="requireManager"/> -->
         <interceptor-ref name="iptStackWithoutSetup"/>
       </interceptor-stack>
 

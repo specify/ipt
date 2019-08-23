@@ -131,9 +131,9 @@
 <#include "/WEB-INF/pages/inc/menu.ftl">
 <#include "/WEB-INF/pages/macros/forms.ftl"/>
 
-<h1><span class="superscript"><@s.text name='manage.overview.title.label'/></span>
-    <a class="tooltip" href="resource.do?r=${resource.shortname}" title="${resource.title!resource.shortname}">${resource.title!resource.shortname}</a>
-</h1>
+<!-- <h1><span class="superscript"><@s.text name='manage.overview.title.label'/></span> -->
+<!--     <a class="tooltip" href="resource.do?r=${resource.shortname}" title="${resource.title!resource.shortname}">${resource.title!resource.shortname}</a> -->
+<!-- </h1> -->
 <div class="grid_17 suffix_1">
 <h2 class="subTitle"><@s.text name='manage.metadata.basic.title'/></h2>
     <form class="topForm" action="metadata-${section}.do" method="post">
@@ -598,7 +598,6 @@
 
         <div class="buttons">
  		<@s.submit cssClass="button" name="save" key="button.save"/>
- 		<@s.submit cssClass="button" name="cancel" key="button.cancel"/>
 	</div>
 	<!-- internal parameter -->
 	<input name="r" type="hidden" value="${resource.shortname}" />
