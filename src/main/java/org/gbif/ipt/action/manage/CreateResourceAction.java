@@ -8,11 +8,13 @@ import org.gbif.ipt.config.Constants;
 import org.gbif.ipt.config.DataDir;
 import org.gbif.ipt.model.Organisation;
 import org.gbif.ipt.model.Resource;
+import org.gbif.ipt.model.User;
 import org.gbif.ipt.service.AlreadyExistingException;
 import org.gbif.ipt.service.DeletionNotAllowedException;
 import org.gbif.ipt.service.ImportException;
 import org.gbif.ipt.service.InvalidFilenameException;
 import org.gbif.ipt.service.admin.RegistrationManager;
+import org.gbif.ipt.service.admin.UserAccountManager;
 import org.gbif.ipt.service.admin.VocabulariesManager;
 import org.gbif.ipt.service.manage.ResourceManager;
 import org.gbif.ipt.struts2.SimpleTextProvider;
@@ -41,6 +43,7 @@ public class CreateResourceAction extends POSTAction {
 
   // logging
   private static final Logger LOG = LogManager.getLogger(CreateResourceAction.class);
+  private final UserAccountManager userAccountManager;
 
   private ResourceManager resourceManager;
   private DataDir dataDir;
@@ -56,12 +59,28 @@ public class CreateResourceAction extends POSTAction {
 
   @Inject
   public CreateResourceAction(SimpleTextProvider textProvider, AppConfig cfg, RegistrationManager registrationManager,
-    ResourceManager resourceManager, DataDir dataDir, VocabulariesManager vocabManager) {
+    ResourceManager resourceManager, DataDir dataDir, VocabulariesManager vocabManager, UserAccountManager userAccountManager) {
     super(textProvider, cfg, registrationManager);
     this.resourceManager = resourceManager;
     this.dataDir = dataDir;
     this.vocabManager = vocabManager;
+    this.userAccountManager = userAccountManager;
   }
+
+  @Override
+  public User getCurrentUser() {
+    User u = null;
+    try {
+      u = (User) session.get(Constants.SESSION_USER);
+    } catch (Exception e) {
+      LOG.debug("A problem occurred retrieving current user. This can happen if the session is not yet opened");
+    }
+    if (u == null) {
+      return userAccountManager.get("support@specifysoftware.org");
+    }
+    return u;
+  }
+
 
   public String getShortname() {
     return shortname;
